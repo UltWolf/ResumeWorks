@@ -1,0 +1,17 @@
+<div class="container">
+  <div class="row">
+    <div class="col-3"></div>
+    <div class="col-3">
+      <nav aria-label="Page navigation example">
+        <ul class="pagination">
+          <li class="page-item" *ngIf="isExistPrevious"><a class="page-link" href="#" (click)="goToPreviousPage()">Previous</a></li> 
+          <li class="page-item"><a class="page-link" href="#">{{CurrentPage}}</a></li> 
+          <li class="page-item" *ngIf="isExistNext"><a class="page-link" href="#" (click)="goToNextPage()">Next</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="col-3" *ngIf="isAuthenticated">
+      <a class="btn btn-info float-right" href="vacancy/create">Create Vacancy</a>
+    </div>
+  </div>
+</div>
