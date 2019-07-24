@@ -1,0 +1,134 @@
+<div [hidden]="!isEdit">
+    <h1>Create vacancy form</h1>
+
+    <ng-form #creationForm="ngForm">
+        <div class="card form-card">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+
+                            <label for="title"> Title </label>
+
+                            <input #title="ngModel" type="text" class="form-control" required
+                                   [(ngModel)]="vacancy.title"
+                                   name="title">
+                            <div [hidden]="title.valid || title.pristine"
+                                 class="alert alert-danger">
+                                Title is required
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="description">Description</label>
+                            <textarea #description="ngModel" class="form-control" required
+                                      [(ngModel)]="vacancy.description" name="description"></textarea>
+                            <div [hidden]="title.valid || title.pristine"
+                                 class="alert alert-danger">
+                                Description is required
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <label for="propose">We are propose</label>
+                <div *ngIf="!vacancy.propose">
+                    <input type="button" (click)="vacancy.propose=' '" class="btn-success  rounded-circle add-btn"
+                           value="+"/>
+                </div>
+                <div class="row">
+                    <div class="col-md-11" *ngIf="vacancy.propose">
+                        
+                    <textarea #propose="ngModel" class="form-control" required
+                              [(ngModel)]="vacancy.propose" name="propose"></textarea>
+                        <div [hidden]="propose.valid || propose.pristine"
+                             class="alert alert-danger">
+                            Propose is required
+                        </div>
+                    </div>
+                    <div class="col-md-1" *ngIf="vacancy.propose">
+                        <input type="button" class="btn close float-right" value="X" (click)="vacancy.propose=null">
+                    </div>
+                </div>
+
+                <label for="requirements">What are we need from you</label>
+                <div *ngIf="!vacancy.requirements">
+                    <input type="button" (click)="vacancy.requirements=' '" class="btn-success  rounded-circle add-btn"
+                           value="+"/>
+                </div>
+                <div class="row" *ngIf="vacancy.requirements">
+                    <div class="col-md-11">
+                        
+                    <textarea #requirements="ngModel" class="form-control" required
+                              [(ngModel)]="vacancy.requirements" name="requiremenets"></textarea>
+                        <div [hidden]="requirements.valid || requirements.pristine"
+                             class="alert alert-danger">
+                            requirements is required
+                        </div>
+                    </div>
+                    <div class="col-md-1">
+                        <input type="button" class="btn close float-right" value="X" (click)="vacancy.requirements=null">
+                    </div>
+                </div>
+                <label for="skills">Skills are we needing.</label>
+                <div *ngIf="!vacancy.skills">
+                    <input type="button" (click)="vacancy.skills=' '" class="btn-success  rounded-circle add-btn"
+                           value="+"/>
+                </div>
+
+                <div class="row" *ngIf="vacancy.skills">
+                    <div class="col-md-11">
+                        
+                    <textarea #skills="ngModel" class="form-control" required
+                              [(ngModel)]="vacancy.skills" name="skills"></textarea>
+                        <div [hidden]="skills.valid || skills.pristine"
+                             class="alert alert-danger">
+                            skills is required
+                        </div>
+                    </div>
+                    <div class="col-md-1">
+                        <input type="button" class="btn close float-right" value="X" (click)="vacancy.skills=null">
+                    </div>
+                </div>
+                <input type="button" class="btn-success btn float-right submit-but" value="Update" (click)="Update()"/>
+            </div>
+        </div>
+    </ng-form>
+</div>
+
+<div [hidden]="isEdit">
+    <h2>You submitted the following:</h2>
+    <div class="row">
+        <div class="col-xs-3">Author:</div>
+        <div class="col-xs-9">{{ vacancy.authorEmail }}</div>
+    </div>
+    <div class="row">
+        <div class="col-xs-3">Title:</div>
+        <div class="col-xs-9">{{ vacancy.title }}</div>
+    </div>
+    <div class="row">
+        <div class="col-xs-3">Description</div>
+        <div class="col-xs-9">{{ vacancy.description}}</div>
+    </div>
+    <div class="row" *ngIf="vacancy.propose">
+        <div class="col-xs-3">Propose:</div>
+        <div class="col-xs-9">{{ vacancy.propose }}</div>
+    </div>
+    <div class="row" *ngIf="vacancy.requirements">
+        <div class="col-xs-3">Requirements</div>
+        <div class="col-xs-9">{{ vacancy.requirements}}</div>
+    </div>
+    <div class="row" *ngIf="vacancy.skills">
+        <div class="col-xs-3">skills</div>
+        <div class="col-xs-9">{{ vacancy.skills}}</div>
+    </div>
+    <br>
+    <div [hidden]="!isAuthor">
+        <button class="btn btn-primary" (click)="isEdit=true">Edit</button>
+
+        <input (click)="Delete()" type="submit" class="btn btn-danger" value="Delete">
+    </div>
+</div> 

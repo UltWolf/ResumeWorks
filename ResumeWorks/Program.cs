@@ -6,6 +6,9 @@ using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using ResumeWorks.Services.DbInitialize;
+using Serilog;
+using Serilog.Events;
 
 namespace ResumeWorks
 {
@@ -13,7 +16,22 @@ namespace ResumeWorks
     {
         public static void Main(string[] args)
         {
-            CreateWebHostBuilder(args).Build().Run();
+            Log.Logger = new LoggerConfiguration()
+                .Enrich.FromLogContext()
+                .MinimumLevel.Debug()
+                .WriteTo.ColoredConsole(
+                    LogEventLevel.Verbose,
+                    "{NewLine}{Timestamp:HH:mm:ss} [{Level}] ({CorrelationToken}) {Message}{NewLine}{Exception}") 
+                .CreateLogger();
+                
+            try
+            {
+                CreateWebHostBuilder(args).Build().Seed().Run();
+            }
+            finally
+            { 
+                Log.CloseAndFlush();
+            }
         }
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>

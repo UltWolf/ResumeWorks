@@ -1,0 +1,5 @@
+ 
+<div *ngFor="let vacancy of vacancies">
+    <app-vacancy-in-list [(vacancy)]="vacancy"></app-vacancy-in-list>
+</div>
+<app-page-manager  (goToPage)="ChangePage($event)"></app-page-manager>

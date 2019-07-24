@@ -11,6 +11,9 @@ using ResumeWorks.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using ResumeWorks.Services;
+using ResumeWorks.Services.Abstracts;
+using ResumeWorks.Services.DbInitialize;
 
 namespace ResumeWorks
 {
@@ -27,10 +30,21 @@ namespace ResumeWorks
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlite(
+                options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
+          
+            services.AddDefaultIdentity<ApplicationUser>(o =>
+                {
+                    o.Password.RequireDigit = false;
 
-            services.AddDefaultIdentity<ApplicationUser>()
+                    o.Password.RequireLowercase = false;
+
+                    o.Password.RequireUppercase = false;
+
+                    o.Password.RequireNonAlphanumeric = false;
+
+                    o.Password.RequiredLength = 6;
+                })
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddIdentityServer()
@@ -39,6 +53,8 @@ namespace ResumeWorks
             services.AddAuthentication()
                 .AddIdentityServerJwt();
             services.AddMvc(options => options.EnableEndpointRouting = false);
+            services.AddScoped<IRepositoryWrapper,RepositoryWrapper>();
+            
 
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration => { configuration.RootPath = "ClientApp/dist"; });

@@ -1,0 +1,99 @@
+
+    <h1>Create vacancy form</h1>
+    <ng-form #creationForm="ngForm">
+        <div class="card form-card">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+
+                            <label for="title"> Title </label>
+
+                            <input #title="ngModel" type="text" class="form-control" required
+                                   [(ngModel)]="vacancy.title"
+                                   name="title">
+                            <div [hidden]="title.valid || title.pristine"
+                                 class="alert alert-danger">
+                                Title is required
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="description">Description</label>
+                            <textarea #description="ngModel" class="form-control" required
+                                      [(ngModel)]="vacancy.description" name="description"></textarea>
+                            <div [hidden]="title.valid || title.pristine"
+                                 class="alert alert-danger">
+                                Description is required
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <label for="propose">We are propose</label>
+                <div   *ngIf="!withPropose">
+                    <input type="button" (click)="withPropose=true" class="btn-success  rounded-circle add-btn"
+                           value="+"/>
+                </div>
+                <div class="row">
+                <div class="col-md-11" *ngIf="withPropose">
+                        
+                    <textarea #propose="ngModel" class="form-control" required
+                              [(ngModel)]="vacancy.propose" name="propose"></textarea>
+                    <div [hidden]="propose.valid || propose.pristine"
+                         class="alert alert-danger">
+                        Propose is required
+                    </div>
+                </div>
+                <div class="col-md-1" *ngIf="withPropose">
+                    <input type="button" class="btn close float-right" value="X" (click)="withPropose=false">
+                </div>
+                </div>
+
+                <label for="requirements">What are we need from you</label>
+                <div *ngIf="!withRequirements">
+                    <input type="button" (click)="withRequirements=true" class="btn-success  rounded-circle add-btn"
+                           value="+"/>
+                </div>
+                <div class="row" *ngIf="withRequirements">
+                    <div class="col-md-11">
+                        
+                    <textarea #requirements="ngModel" class="form-control" required
+                              [(ngModel)]="vacancy.requirements" name="requiremenets"></textarea>
+                        <div [hidden]="requirements.valid || requirements.pristine"
+                             class="alert alert-danger">
+                            requirements is required
+                        </div>
+                    </div>
+                    <div class="col-md-1">
+                        <input type="button" class="btn close float-right" value="X" (click)="withRequirements=false">
+                    </div>
+                </div>
+                <label for="skills">Skills are we needing.</label>
+                <div *ngIf="!withSkills">
+                    <input type="button" (click)="withSkills=true" class="btn-success  rounded-circle add-btn"
+                           value="+"/>
+                </div>
+
+                <div class="row" *ngIf="withSkills">
+                    <div class="col-md-11">
+                        
+                    <textarea #skills="ngModel" class="form-control" required
+                              [(ngModel)]="vacancy.skills" name="skills"></textarea>
+                        <div [hidden]="skills.valid || skills.pristine"
+                             class="alert alert-danger">
+                            skills is required
+                        </div>
+                    </div>
+                    <div class="col-md-1">
+                        <input type="button" class="btn close float-right" value="X" (click)="withSkills=false">
+                    </div>
+                </div>
+                <input type="button" class="btn-success btn float-right submit-but" value="Create" (click)="onSubmit()"/>
+            </div>
+        </div>
+    </ng-form>
+

@@ -7,6 +7,8 @@ namespace ResumeWorks.Models
         public string Description { get; set; }
         public string Skills { get; set; }
         public string Requirements { get; set; }
-        public string Propose { get; set; }        
+        public string Propose { get; set; }  
+        
+        public string AuthorEmail { get; set; }
     }
 } 
